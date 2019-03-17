@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { auth, googleProvider } from './firebase'
+import { auth, googleProvider, facebookProvider } from './firebase'
 
 
 class LogIn extends Component {
@@ -44,6 +44,17 @@ class LogIn extends Component {
                 console.error((`error: ${error.code} ${error.message}`));
             })
     }
+    handleFacebookLogin = () => {
+        auth
+            .signInWithPopup(facebookProvider)
+            .then(response => {
+                console.log('Response: ', response);
+                this.props.history.push('/')
+            })
+            .catch(error => {
+                console.error((`error: ${error.code} ${error.message}`));
+            })
+    }
 
     render() {
         return (
@@ -51,6 +62,9 @@ class LogIn extends Component {
                 <h2>Login:</h2>
                 <div>
                     <button onClick={this.handleGoogleLogin}>by-Google-login</button>
+                </div>
+                <div>
+                    <button onClick={this.handleFacebookLogin}>by-Facebook-login</button>
                 </div>
                 <form onSubmit={this.handleSubmit} >
                     <div>
