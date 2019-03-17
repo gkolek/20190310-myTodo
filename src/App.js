@@ -10,8 +10,9 @@ import LogOut from './LogOut'
 import Menu from './Menu'
 import Avatar from './Avatar'
 import RestrictedRoutes from './RestrictedRoutes'
+import Upload from './Upload'
 
-import {auth} from './firebase'
+import { auth } from './firebase'
 class App extends Component {
 
   state = {
@@ -47,7 +48,7 @@ class App extends Component {
     // const catsComponent = this.state.isAuthorized ? <Cats /> : null
     return (
       <BrowserRouter>
-      <div>
+        <div>
           <Menu isAuthorized={this.state.isAuthorized} />
           {this.state.isAuthorized ? <Avatar user={this.state.user} /> : null}
           <Route exact path="/" component={this.state.isAuthorized ? Cats : null} />
@@ -56,6 +57,7 @@ class App extends Component {
             <Route path="/beer" component={null} />
             <Route path="/beer-list" component={null} />
             <Route path="/create-beer" component={null} />
+            <Route path="/upload" component={Upload}/>
           </RestrictedRoutes>
 
           <Route path="/register" component={Register} />
@@ -84,16 +86,16 @@ class App extends Component {
             (props) => <LogOut {...props} setIsAuthorized={this.setIsAuthorized} />
           } />
  */}
-          {/* <Route path="/register" component={Register} setIsAuthorized={this.setIsAuthorized} /> */}
-          {/* <Route path="/login" component={LogIn} setIsAuthorized={this.setIsAuthorized} /> */}
+        {/* <Route path="/register" component={Register} setIsAuthorized={this.setIsAuthorized} /> */}
+        {/* <Route path="/login" component={LogIn} setIsAuthorized={this.setIsAuthorized} /> */}
 
-          {/* <Register setIsAuthorized={this.setIsAuthorized} />
+        {/* <Register setIsAuthorized={this.setIsAuthorized} />
           {this.state.isAuthorized ? <Cats /> : null} */}
-          {/* <LogIn setIsAuthorized={this.setIsAuthorized} />
+        {/* <LogIn setIsAuthorized={this.setIsAuthorized} />
           {this.state.isAuthorized ? <Cats /> : null} */}
 
-          {/* {catsComponent} */}
-          {/* {this.renderCatsComponent} */}
+        {/* {catsComponent} */}
+        {/* {this.renderCatsComponent} */}
         {/* </div> */}
       </BrowserRouter>
     );

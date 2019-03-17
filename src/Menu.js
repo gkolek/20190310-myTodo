@@ -18,7 +18,11 @@ export default ({ isAuthorized }) => (
     </li>
     <li style={createStyles(!isAuthorized)}>
       <Link to="/register">Register</Link>
+    </li>    
+    <li style={createStyles(isAuthorized)}>
+      <Link to="/upload">Upload</Link>
     </li>
+
     <li style={createStyles(isAuthorized)}>
       <Link to="/logout">Logout</Link>
     </li>
