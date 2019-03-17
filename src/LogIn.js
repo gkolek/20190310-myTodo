@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { auth } from './firebase'
+import { auth, googleProvider } from './firebase'
 
 
 class LogIn extends Component {
@@ -22,6 +22,7 @@ class LogIn extends Component {
             .then(response => {
                 console.log('Response: ', response);
                 this.props.setIsAuthorized(true);
+                this.props.history.push('/')
             })
             .catch(error => {
                 console.error((`error: ${error.code} ${error.message}`));
@@ -32,11 +33,26 @@ class LogIn extends Component {
         event.preventDefault()
     }
 
+    handleGoogleLogin = () => {
+        auth
+            .signInWithPopup(googleProvider)
+            .then(response => {
+                console.log('Response: ', response);
+                this.props.history.push('/')
+            })
+            .catch(error => {
+                console.error((`error: ${error.code} ${error.message}`));
+            })
+    }
+
     render() {
         return (
             <div>
                 <h2>Login:</h2>
                 <form onSubmit={this.handleSubmit} >
+                    <div>
+                        <button onClick={this.handleGoogleLogin}>by-Google-login</button>
+                    </div>
                     <div>
                         <input
                             onChange={this.handleChange}
