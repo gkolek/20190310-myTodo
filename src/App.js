@@ -7,12 +7,16 @@ import Register from './Register'
 import Cats from './Cats'
 import LogIn from './LogIn'
 import LogOut from './LogOut'
+import Menu from './Menu'
+import Avatar from './Avatar'
+import RestrictedRoutes from './RestrictedRoutes'
 
 import {auth} from './firebase'
 class App extends Component {
 
   state = {
-    isAuthorized: false
+    isAuthorized: false,
+    user: {}
   }
 
   setIsAuthorized = (value) => {
@@ -20,14 +24,18 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // db.ref('/cats').remove();
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ isAuthorized: true });
+        this.setState({
+          isAuthorized: true,
+          user: user.providerData[0]
+        });
+        // console.log(auth.currentUser);
       } else {
         this.setState({ isAuthorized: false });
       }
     })
-
   }
 
   // renderCatsComponent() {
@@ -39,7 +47,25 @@ class App extends Component {
     // const catsComponent = this.state.isAuthorized ? <Cats /> : null
     return (
       <BrowserRouter>
-        <div>
+      <div>
+          <Menu isAuthorized={this.state.isAuthorized} />
+          {this.state.isAuthorized ? <Avatar user={this.state.user} /> : null}
+          <Route exact path="/" component={this.state.isAuthorized ? Cats : null} />
+
+          <RestrictedRoutes isAuthorized={this.state.isAuthorized}>
+            <Route path="/beer" component={null} />
+            <Route path="/beer-list" component={null} />
+            <Route path="/create-beer" component={null} />
+          </RestrictedRoutes>
+
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={LogIn} />
+          <Route path="/logout" component={LogOut} />
+          {/* {this.state.isAuthorized ? <Cats /> : null} */}
+          {/* {cats} */}
+          {/* {this.renderCats()} */}
+        </div>
+        {/* <div>
           <div>
             <Link to="/">Home </Link>
             <Link to="/register">Register </Link>
@@ -57,7 +83,7 @@ class App extends Component {
           <Route path="/logout" render={
             (props) => <LogOut {...props} setIsAuthorized={this.setIsAuthorized} />
           } />
-
+ */}
           {/* <Route path="/register" component={Register} setIsAuthorized={this.setIsAuthorized} /> */}
           {/* <Route path="/login" component={LogIn} setIsAuthorized={this.setIsAuthorized} /> */}
 
@@ -68,7 +94,7 @@ class App extends Component {
 
           {/* {catsComponent} */}
           {/* {this.renderCatsComponent} */}
-        </div>
+        {/* </div> */}
       </BrowserRouter>
     );
   }
