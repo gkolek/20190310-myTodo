@@ -49,10 +49,10 @@ class LogIn extends Component {
         return (
             <div>
                 <h2>Login:</h2>
+                <div>
+                    <button onClick={this.handleGoogleLogin}>by-Google-login</button>
+                </div>
                 <form onSubmit={this.handleSubmit} >
-                    <div>
-                        <button onClick={this.handleGoogleLogin}>by-Google-login</button>
-                    </div>
                     <div>
                         <input
                             onChange={this.handleChange}
